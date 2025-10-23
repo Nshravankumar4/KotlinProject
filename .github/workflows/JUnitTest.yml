@@ -1,4 +1,4 @@
-name: Kotlin_build
+name: Kotlin_JUnit_Test
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
     branches: [main]
 
 jobs:
-  build-and-run:
+  run-tests:
     runs-on: ubuntu-latest
 
     steps:
@@ -29,8 +29,5 @@ jobs:
           key: gradle-${{ runner.os }}-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
           restore-keys: gradle-${{ runner.os }}-
 
-      - name: Build project
-        run: ./gradlew build
-
-      - name: Run application
-        run: ./gradlew run
+      - name: Run JUnit tests
+        run: ./gradlew test

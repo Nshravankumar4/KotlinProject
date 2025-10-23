@@ -4,18 +4,18 @@ fun VariableType() {
 
     /*
        Example for `val` (cannot be reassigned)
+       val creates a constant
     */
     val name = "John"
     println("Val example: $name")
-    // name = "Robert" // This would cause an error: Val cannot be reassigned
+    // name = "Robert" // Uncommenting this will cause a compile error
 
     /*
        Example for `var` (can be reassigned)
+       var creates a variable whose value can change
     */
     var age = 25
     println("Var example before change: $age")
-
-    // Reassigning a new value
     age = 30
     println("Var example after change: $age")
 }
