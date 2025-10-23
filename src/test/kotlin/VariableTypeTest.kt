@@ -13,7 +13,6 @@ class VariableTypeTest {
     @Test
     fun testValExample() {
         val name = "John"
-        // val cannot be reassigned, so we test the initial value
         assertEquals("John", name)
     }
 }

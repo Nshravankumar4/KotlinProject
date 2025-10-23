@@ -22,5 +22,5 @@ tasks.test {
 }
 
 application {
-    mainClass.set("MainKt") // Change if your main file has a different name
+    mainClass.set("MainKt")
 }
