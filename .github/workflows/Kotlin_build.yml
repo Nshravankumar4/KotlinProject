@@ -7,11 +7,11 @@ on:
     branches: [main]
 
 jobs:
-  build-and-run:
+  build-and-test:
     runs-on: ubuntu-latest
 
     steps:
-      # Step 1: Checkout the repository
+      # Step 1: Checkout repository
       - name: Checkout repository
         uses: actions/checkout@v3
 
@@ -26,11 +26,20 @@ jobs:
       - name: Install Kotlin
         run: sudo snap install --classic kotlin
 
-      # Step 4: Compile all Kotlin files recursively
+      # Step 4: Compile all Kotlin source files
       - name: Compile Kotlin
         run: |
+          # Compile all .kt files in root and subfolders
           kotlinc $(find . -name "*.kt") -include-runtime -d Main.jar
 
       # Step 5: Run Kotlin program
       - name: Run Kotlin program
         run: java -jar Main.jar
+
+      # Step 6: Run JUnit tests
+      - name: Run JUnit tests
+        run: |
+          # Compile test files with source files
+          kotlinc $(find . -name "*.kt") -cp junit-platform-console-standalone-1.10.0.jar -d test.jar
+          # Run tests
+          java -jar junit-platform-console-standalone-1.10.0.jar --class-path test.jar --scan-class-path
