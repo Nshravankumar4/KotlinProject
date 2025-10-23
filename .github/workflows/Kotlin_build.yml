@@ -1,4 +1,4 @@
-name: Kotlin_build  # Workflow name
+name: Kotlin_build
 
 on:
   push:
@@ -26,9 +26,10 @@ jobs:
       - name: Install Kotlin
         run: sudo snap install --classic kotlin
 
-      # Step 4: Compile all Kotlin files (root + src)
+      # Step 4: Compile all Kotlin files recursively
       - name: Compile Kotlin
-        run: kotlinc *.kt src/*.kt -include-runtime -d Main.jar
+        run: |
+          kotlinc $(find . -name "*.kt") -include-runtime -d Main.jar
 
       # Step 5: Run Kotlin program
       - name: Run Kotlin program
