@@ -1,0 +1,8 @@
+// My Code is running
+// My Variable Type Function is Running
+// Val example: John
+// Var example before change: 25
+// Var example after change: 30
+
+// Process finished with exit code 0
+
