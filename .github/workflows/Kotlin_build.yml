@@ -1,12 +1,10 @@
-name: Kotlin_build
+name: Kotlin_build  # <-- changed name
 
 on:
   push:
-    branches:
-      - main
+    branches: [main]
   pull_request:
-    branches:
-      - main
+    branches: [main]
 
 jobs:
   build-and-run:
@@ -28,9 +26,9 @@ jobs:
       - name: Install Kotlin
         run: sudo snap install --classic kotlin
 
-      # Step 4: Compile Kotlin code
+      # Step 4: Compile all Kotlin files (root + src)
       - name: Compile Kotlin
-        run: kotlinc src/Main.kt -include-runtime -d Main.jar
+        run: kotlinc *.kt src/*.kt -include-runtime -d Main.jar
 
       # Step 5: Run Kotlin program
       - name: Run Kotlin program
