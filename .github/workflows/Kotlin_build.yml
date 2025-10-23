@@ -1,25 +1,39 @@
-name: Kotlin_build
+name: Kotlin_Build
 
 on:
   push:
-    branches: [main]
+    branches: [main, develop]
   pull_request:
-    branches: [main]
+    branches: [main, develop]
+
+env:
+  BRANCH: ${{ github.head_ref || github.ref_name }}
 
 jobs:
   build-and-run:
     runs-on: ubuntu-latest
 
     steps:
+      # Step 1: Checkout the code
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      # Step 2: Setup JDK 17
       - name: Set up JDK 17
         uses: actions/setup-java@v3
         with:
           distribution: temurin
           java-version: 17
 
+      # Step 3: Make script executable and setup repo
+      - name: Setup repository branch
+        run: |
+          chmod +x Scripts/SetUpRepo.sh
+          Scripts/SetUpRepo.sh
+        env:
+          BRANCH_NAME: ${{ env.BRANCH }}
+
+      # Step 4: Cache Gradle packages
       - name: Cache Gradle packages
         uses: actions/cache@v3
         with:
@@ -29,8 +43,10 @@ jobs:
           key: gradle-${{ runner.os }}-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
           restore-keys: gradle-${{ runner.os }}-
 
-      - name: Build project
+      # Step 5: Build project
+      - name: Build Kotlin project
         run: ./gradlew build
 
-      - name: Run application
+      # Step 6: Run application
+      - name: Run Kotlin app
         run: ./gradlew run
