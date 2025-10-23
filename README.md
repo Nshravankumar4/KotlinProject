@@ -12,3 +12,12 @@ KotlinProject/
 ├─ .gitignore
 
 for Linux set up repo chmod +x Scripts/SetUpRepo.sh
+✅ Fix:
+
+You need to make the script executable first:
+
+chmod +x Scripts/SetUpRepo.sh
+
+Then run:
+
+Scripts/SetUpRepo.sh main
