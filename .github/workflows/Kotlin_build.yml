@@ -11,35 +11,29 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Step 1: Checkout repository
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # Step 2: Set up JDK 17
       - name: Set up JDK 17
         uses: actions/setup-java@v3
         with:
           distribution: temurin
           java-version: 17
 
-      # Step 3: Install Kotlin compiler
-      - name: Install Kotlin
-        run: sudo snap install --classic kotlin
+      - name: Cache Gradle packages
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: gradle-${{ runner.os }}-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: gradle-${{ runner.os }}-
 
-      # Step 4: Compile all Kotlin source files
-      - name: Compile Kotlin
-        run: |
-          # Compile all .kt files in root and subfolders
-          kotlinc $(find . -name "*.kt") -include-runtime -d Main.jar
+      - name: Build project
+        run: ./gradlew build
 
-      # Step 5: Run Kotlin program
-      - name: Run Kotlin program
-        run: java -jar Main.jar
+      - name: Run application
+        run: ./gradlew run
 
-      # Step 6: Run JUnit tests
-      - name: Run JUnit tests
-        run: |
-          # Compile test files with source files
-          kotlinc $(find . -name "*.kt") -cp junit-platform-console-standalone-1.10.0.jar -d test.jar
-          # Run tests
-          java -jar junit-platform-console-standalone-1.10.0.jar --class-path test.jar --scan-class-path
+      - name: Run tests
+        run: ./gradlew test
