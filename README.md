@@ -10,3 +10,5 @@ KotlinProject/
 ├─ src/test/kotlin/
 │   └─ VariableTypeTest.kt
 ├─ .gitignore
+
+for Linux set up repo chmod +x Scripts/SetUpRepo.sh
