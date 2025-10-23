@@ -1,4 +1,4 @@
-name: Kotlin_build  # <-- changed name
+name: Kotlin_build  # Workflow name
 
 on:
   push:
